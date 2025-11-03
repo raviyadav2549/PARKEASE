@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🅿️ ParkEase — Find Parking in Seconds</title>
+    <style>
+        /* TOP NAVIGATION CSS (Straight Links) */
+        .app-header { background-color: #000; color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; }
+        .app-title { font-size: 1.5em; font-weight: bold; color: white; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 1.05em; padding: 8px 0; transition: color 0.3s; }
+        .nav-links a:hover { color: #00C853; }
+        
+        /* BANNER/HERO SECTION CSS */
+        .hero-banner {
+            background-image: url('https://files.catbox.moe/3nuflu.jpg'); /* Your specified image */
+            background-size: cover;
+            background-position: center 30%; /* Image ka center se thoda upar focus */
+            height: 450px; /* Adjust height as needed */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white; /* Text color white for contrast */
+            position: relative;
+            z-index: 1;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+            z-index: -1;
+        }
+        .hero-banner h1 {
+            font-size: 3.5em; 
+            margin-bottom: 10px; 
+            color: white; /* Title is now white */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+        .hero-banner .tagline {
+            font-size: 1.3em;
+            color: #ccc;
+            margin-bottom: 30px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        /* GENERAL STYLES */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f8f9fa; line-height: 1.6; color: #333; }
+        .main-content { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* CONTENT SECTION STYLING */
+        .section { padding: 40px 0; border-bottom: 1px solid #eee; }
+        .section-header { font-size: 1.8em; color: #1976D2; margin-bottom: 15px; font-weight: 600; }
+        
+        .feature-list, .city-list { list-style: none; padding: 0; }
+        .feature-list li { margin-bottom: 10px; font-size: 1.05em; }
+        
+        .cta-links a { 
+            display: inline-block; 
+            margin-right: 15px; 
+            padding: 10px 20px; 
+            background-color: #00C853; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .cta-links a:hover { background-color: #00B04C; }
+        .app-coming-soon { background-color: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border: 1px solid #ffeeba; margin-top: 20px; }
+        
+        /* FOOTER CSS (Common) */
+        footer { background-color: #222; color: #ccc; padding: 40px 20px 20px; margin-top: 50px; }
+        .footer-content { max-width: 900px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; }
+        .footer-brand { width: 100%; max-width: 300px; margin-bottom: 20px; }
+        .footer-brand .name { font-size: 24px; font-weight: bold; color: white; margin-bottom: 5px; }
+        .footer-brand p, .footer-links a { color: #ccc; font-size: 14px; }
+        .footer-links { display: flex; gap: 60px; }
+        .footer-links a { display: block; text-decoration: none; margin-bottom: 8px; transition: color 0.3s; }
+        .footer-links a:hover { color: #00C853; }
+        .copyright { width: 100%; text-align: center; margin-top: 30px; font-size: 0.85em; }
+        .contact-links a { color: #1976D2; text-decoration: none; font-weight: bold; }
+
+        /* SCROLL TO TOP BUTTON CSS */
+        #scrollToTopBtn {
+            display: none; 
+            position: fixed; 
+            bottom: 25px; 
+            right: 25px; 
+            z-index: 100; 
+            border: none; 
+            outline: none; 
+            background-color: #1976D2; 
+            color: white; 
+            cursor: pointer; 
+            padding: 15px; 
+            border-radius: 50%; 
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        #scrollToTopBtn:hover {
+            background-color: #1565C0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="app-header">
+        <div class="app-title">PARKEASE</div>
+        <div class="nav-links">
+            <a href="#add-spot-form">ADD PARKING</a> 
+            <a href="search.html">FIND PARKING</a>
+            <a href="about.html">ABOUT ME</a>
+        </div>
+    </div>
+    <div class="hero-banner">
+        <h1 id="animated-title">🅿️ ParkEase — Find Parking in Seconds</h1>
+        <p class="tagline">India’s smartest way to find real-time parking spaces — no booking, no waiting, just park with ease.</p>
+    </div>
+
+    <div class="main-content">
+
+        <div class="section" style="padding-top: 20px;">
+            <h2 class="section-header">🚗 Welcome to ParkEase</h2>
+            <p>Finding parking shouldn’t be harder than driving itself.</p>
+            <p>With **ParkEase**, you can instantly search for real, community-shared parking spots around your area.</p>
+            <p style="font-weight: bold;">No signup. No confusion. Just open, search, and park.</p>
+            <p>Join thousands of users making city parking stress-free — one spot at a time.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-header">⚙️ How ParkEase Works</h2>
+            <ol class="feature-list" style="list-style-type: decimal; padding-left: 20px;">
+                <li>**Search** — Type your city, area, or landmark and see available parking. (<a href="search.html">Try Search Now</a>)</li>
+                <li>**Explore** — Check details shared by real users nearby.</li>
+                <li>**Drive & Park** — Go directly to your spot. No booking required.</li>
+            </ol>
+            <p style="font-weight: bold; margin-top: 20px;">It’s that simple. 100% free. 100% community-powered.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-header">🌟 Why Choose ParkEase</h2>
+            <ul class="feature-list">
+                <li>**🚘 Real-Time Spots:** Updated by users every minute.</li>
+                <li>**⏱️ Save Time & Fuel:** Find parking before you even arrive.</li>
+                <li>**💬 Verified by Community:** Real users confirm availability.</li>
+                <li>**🌍 Available Everywhere:** Works in all Indian cities.</li>
+                <li>**💸 Completely Free:** No fees. No subscriptions. Ever.</li>
+            </ul>
+        </div>
+
+        <div class="section" style="background-color: #e6f7ff; border-radius: 10px; border: 1px solid #b3e0ff;">
+            <h3 class="section-header" style="color: #007bff; border-bottom: none;">📱 App Coming Soon!</h3>
+            <p>The ParkEase mobile app is on its way!</p>
+            <p>Get ready for real-time updates, live maps, and instant directions — right from your phone.</p>
+            <p style="font-weight: bold;">🔔 Stay tuned for launch on Android & iOS.</p>
+        </div>
+
+        <div class="section" id="add-spot-anchor" style="text-align: center;">
+            <h2 class="section-header">🧭 Add Your Parking Spot</h2>
+            <p>Got an empty or unused space?</p>
+            <p>Share it on ParkEase and help others find parking easily.</p>
+            <p>Every contribution helps make your city smarter and cleaner.</p>
+            <p style="font-size: 1.1em; font-weight: bold;">➕ Add your parking spot today — it only takes 30 seconds!</p>
+            <a href="#add-spot-form" style="margin-top: 15px;" class="cta-links">Go to Add Spot Form</a>
+        </div>
+        
+        <div class="content-container" id="add-spot-form" style="max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);">
+            <h2 style="margin-top: 0; color: #00C853;">Report a New Parking Spot</h2>
+            <p style="text-align: center; color: #6c757d;">Please Provide Correct Details for the Available Parking</p>
+            <form id="parkingForm">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" placeholder="eg; Haryana" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box;">
+
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" placeholder="eg; Gurugram" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box;">
+
+                <label for="city_area">Area (City/Area):</label>
+                <input type="text" id="city_area" name="city_area" placeholder="eg; Sector 52, Wazirabad" required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box;">
+
+                <label for="description">Near by:</label>
+                <textarea id="description" name="description" rows="3" placeholder="eg; near shyam sweet hotel sec 52." required style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box;"></textarea>
+                
+                <button type="submit" style="background-color: #00C853; color: white; padding: 14px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 18px; width: 100%; transition: background-color 0.3s;">SUBMIT NOW</button>
+                <p id="form-message" style="margin-top: 20px; text-align: center; font-weight: bold;"></p>
+            </form>
+        </div>
+        <div class="section">
+            <h2 class="section-header">🏙️ Now Available In</h2>
+            <p style="font-size: 1.1em; font-weight: bold;">Dharuhera | Gurgaon | ... and every corner of the earth</p>
+            <p>…and **20+ other cities** across India 🚀</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-header">💬 What People Are Saying</h2>
+            <ul class="feature-list" style="padding-left: 20px; list-style-type: '— ';">
+                <li>“Finally! No more wasting time finding parking.” – ⭐⭐⭐⭐⭐</li>
+                <li>“Simple, fast, and reliable — exactly what I needed.” – ⭐⭐⭐⭐</li>
+                <li>“I use it daily near my office. Brilliant idea.” – ⭐⭐⭐⭐⭐</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-header">💡 Our Mission</h2>
+            <p>To make parking **smarter, cleaner, and community-driven**.</p>
+            <p>Every report, every shared spot, every search — helps us move towards stress-free cities.</p>
+        </div>
+
+        <div class="section" style="text-align: center; border-bottom: none;">
+            <h2 class="section-header">🖤 Join the ParkEase Movement</h2>
+            <p>Let’s make parking simple for everyone.</p>
+            <p style="font-weight: bold; margin-bottom: 20px;">Because smart cities deserve smart parking.</p>
+            <div class="cta-links">
+                <a href="search.html" style="background-color: #1976D2;">🔍 Search Now</a>
+                <a href="#add-spot-form">➕ Add a Spot</a>
+                <a href="#" style="background-color: #555;">📱 App Coming Soon</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            
+            <div class="footer-brand">
+                <div class="name">PARKEASE</div>
+                <p class="tagline">Find Parking in Seconds.</p>
+                <p class="contact-links" style="margin-top: 15px;">
+                    <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank">📧 CLICK HERE</a> <span>(Contact)</span>
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Quick Links</div>
+                    <a href="about.html">About Me</a>
+                    <a href="search.html">Find Parking</a>
+                </div>
+
+                <div id="footer-support">
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Connect</div>
+                    <p style="margin-bottom: 5px;">📸 <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank" style="display: inline;">Instagram</a></p>
+                    <p style="margin-bottom: 5px;">🔗 <a href="https://t.me/ox1_Spark" target="_blank" style="display: inline;">Telegram</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 ParkEase — Find Parking in Seconds. Built with 💚 for a Smarter India.
+        </div>
+    </footer>
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">▲ Home</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzVQ79-_BNNHvUFaSg0Ue90Ohfa3R6p7_3dMSAoFD_BPilHm8pMHlk-pM9APKU2lNjM/exec'; 
+
+        // ----------------------------------------------------
+        // 1. GSAP WORD ANIMATION LOGIC
+        // ----------------------------------------------------
+        const titleElement = document.getElementById('animated-title');
+        if (titleElement) {
+            // Title text ko words mein split karna
+            const text = titleElement.textContent.trim();
+            // Punctuation aur emojis ko alag word ki tarah treat karne ke liye regex
+            const words = text.match(/[\w\u2013—\u2014]+|[\u2700-\u27BF\uE000-\uF8FF\u2000-\u206F\u2C00-\u2DFF\u2E00-\u2E7F\u3000-\u303F\u31C0-\u31EF\u3200-\u32FF\uFE00-\uFE0F\uFF00-\uFFFF]|\S/g) || [];
+            
+            // Har word ko <span> tag mein wrap karna
+            titleElement.innerHTML = words.map(word => 
+                // Space dobara add kiya taaki words chipkein nahi
+                `<span class="split-word" style="display: inline-block; white-space: nowrap;">${word}&nbsp;</span>` 
+            ).join('');
+
+            // GSAP Timeline aur Tween apply karna
+            gsap.from(".split-word", {
+                opacity: 0,
+                y: 40,
+                delay: 0.1, 
+                duration: 0.6, 
+                ease: "power3.out", 
+                stagger: 0.1, 
+            });
+        }
+        
+        // ----------------------------------------------------
+        // 2. ADD PARKING (Form Submission) Logic
+        // ----------------------------------------------------
+        const form = document.getElementById('parkingForm');
+        const message = document.getElementById('form-message');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            message.textContent = 'Processing...';
+            message.style.color = '#007bff';
+            
+            const submitButton = document.querySelector('#parkingForm button[type="submit"]');
+            submitButton.disabled = true; 
+            submitButton.textContent = 'Submitting...';
+            
+            const formData = new FormData(form);
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.result === 'success') {
+                    message.style.color = '#28a745';
+                    message.textContent = '✅ Parking spot successfully reported.';
+                    form.reset(); 
+                } else {
+                    message.style.color = '#dc3545';
+                    message.textContent = '❌ An issue occurred. Please try again.';
+                }
+            })
+            .catch(error => {
+                message.style.color = '#dc3545';
+                message.textContent = '❌ Connection/Server error. Please check your console.';
+                console.error('Fetch Error:', error);
+            })
+            .finally(() => { 
+                submitButton.disabled = false;
+                submitButton.textContent = 'SUBMIT NOW'; 
+            });
+        });
+        
+        // ----------------------------------------------------
+        // 3. SCROLL TO TOP Button Logic
+        // ----------------------------------------------------
+        
+        let mybutton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0; 
+        }
+    </script>
+</body>
+</html>
