@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 ParkSpotter - Search Parking</title>
+    <style>
+        /* NEW HEADER/NAVIGATION CSS (Consistent across all pages) */
+        .app-header { background-color: #000; color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; }
+        .app-title { font-size: 1.5em; font-weight: bold; color: white; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 1.05em; padding: 8px 0; transition: color 0.3s; }
+        .nav-links a:hover { color: #00C853; } 
+
+        /* EXISTING CSS for Search */
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f8f9fa; }
+        .content-container { max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
+        h2 { text-align: center; color: #1e3a8a; margin-bottom: 30px; }
+        .search-box { display: flex; margin-bottom: 25px; }
+        #search-query { flex-grow: 1; padding: 12px; border: 2px solid #ccc; border-radius: 6px 0 0 6px; font-size: 16px; }
+        #search-button { padding: 12px 20px; background-color: #1976D2; color: white; border: none; border-radius: 0 6px 6px 0; cursor: pointer; font-size: 16px; transition: background-color 0.3s; }
+        #search-button:hover { background-color: #1565C0; }
+        #search-button:disabled { background-color: #9e9e9e; cursor: not-allowed; }
+        #results-container { margin-top: 20px; }
+        .parking-card { background: #E8F5E9; padding: 15px; border-left: 5px solid #009688; margin-bottom: 15px; border-radius: 5px; position: relative; }
+        .card-title { font-weight: bold; color: #004d40; margin-bottom: 5px; font-size: 1.1em; }
+        .card-time { font-size: 0.8em; color: #757575; position: absolute; top: 10px; right: 15px; }
+        .card-description { margin-top: 10px; }
+        .not-found { text-align: center; color: #e53e3e; font-size: 1.2em; padding: 30px; background: #fef2f2; border-radius: 5px; }
+        .verify-btn { background-color:#f44336; color:white; border:none; padding: 8px 15px; border-radius: 4px; cursor:pointer; margin-top: 10px; font-size: 0.9em; transition: background-color 0.3s;}
+        .verify-btn:disabled { background-color: #9e9e9e; cursor: not-allowed; }
+        
+        /* FOOTER CSS (Common) */
+        footer { background-color: #222; color: #ccc; padding: 40px 20px 20px; margin-top: 50px; }
+        .footer-content { max-width: 900px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; }
+        .footer-brand { width: 100%; max-width: 300px; margin-bottom: 20px; }
+        .footer-brand .name { font-size: 24px; font-weight: bold; color: white; margin-bottom: 5px; }
+        .footer-brand p, .footer-links a { color: #ccc; font-size: 14px; }
+        .footer-links { display: flex; gap: 60px; }
+        .footer-links a { display: block; text-decoration: none; margin-bottom: 8px; color: #ccc; transition: color 0.3s; }
+        .footer-links a:hover { color: #00C853; }
+        .copyright { width: 100%; text-align: center; margin-top: 30px; font-size: 0.85em; }
+        .contact-links a { color: #1976D2; text-decoration: none; font-weight: bold; }
+
+        /* SCROLL TO TOP BUTTON CSS */
+        #scrollToTopBtn {
+            display: none; 
+            position: fixed; 
+            bottom: 25px; 
+            right: 25px; 
+            z-index: 100; 
+            border: none; 
+            outline: none; 
+            background-color: #1976D2; 
+            color: white; 
+            cursor: pointer; 
+            padding: 15px; 
+            border-radius: 50%; 
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        #scrollToTopBtn:hover {
+            background-color: #1565C0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <div class="app-title">PARKEASE</div>
+        <div class="nav-links">
+            <a href="index.html">ADD PARKING</a>
+            <a href="search.html">FIND PARKING</a>
+            <a href="about.html">ABOUT ME</a>
+        </div>
+    </div>
+    <div class="content-container">
+        <h2>🔍 Parking Dhoondhein (Search)</h2>
+        <div class="search-box">
+            <input type="text" id="search-query" placeholder="City, Area, ya Landmark daalein..." required>
+            <button id="search-button">Search Parking</button>
+        </div>
+        
+        <div id="results-container">
+            <p style="text-align:center; color: #6b7280;">Upar search box mein location daal kar dhoondhein.</p>
+        </div>
+    </div>
+
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzVQ79-_BNNHvUFaSg0Ue90Ohfa3R6p7_3dMSAoFD_BPilHm8pMHlk-pM9APKU2lNjM/exec'; 
+
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-query');
+        const resultsContainer = document.getElementById('results-container');
+        
+        // Check URL for query from Hero Section of index.html
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialQuery = urlParams.get('q');
+        if (initialQuery) {
+            searchInput.value = initialQuery;
+            searchButton.click(); 
+        }
+
+        // Utility function for relative time
+        function timeSince(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            let interval = seconds / 31536000;
+        
+            if (interval > 1) return Math.floor(interval) + " years ago";
+            interval = seconds / 2592000;
+            if (interval > 1) return Math.floor(interval) + " months ago";
+            if (seconds / 86400 > 1) return Math.floor(seconds / 86400) + " days ago";
+            if (seconds / 3600 > 1) return Math.floor(seconds / 3600) + " hours ago";
+            if (seconds / 60 > 1) return Math.floor(seconds / 60) + " minutes ago";
+            return Math.floor(seconds) + " seconds ago";
+        }
+
+
+        searchButton.addEventListener('click', function() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                alert('Please enter a location to search.');
+                return;
+            }
+
+            searchButton.disabled = true;
+            searchButton.textContent = 'Searching...'; 
+
+            resultsContainer.innerHTML = `<p style="text-align:center;">🔍 Loading results for **${query}**...</p>`;
+
+            fetch(`${WEB_APP_URL}?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data.data, query);
+            })
+            .catch(error => {
+                resultsContainer.innerHTML = `<p class="not-found">❌ Error fetching data: ${error.message}</p>`;
+                console.error('Fetch Error:', error);
+            })
+            .finally(() => { 
+                searchButton.disabled = false;
+                searchButton.textContent = 'Search Parking';
+            });
+        });
+
+        function displayResults(data, query) {
+            resultsContainer.innerHTML = ''; 
+            
+            if (data.length === 0) {
+                resultsContainer.innerHTML = `<p class="not-found">😢 **"${query}"** area mein koi khali parking spot pichle 1 ghante mein report nahi hua hai. Kripya naya spot submit karein.</p>`;
+                return;
+            }
+
+            data.forEach(spot => {
+                const card = document.createElement('div');
+                card.className = 'parking-card';
+                
+                const reportDate = new Date(spot.timestamp); 
+                const relativeTime = timeSince(reportDate); 
+
+                card.innerHTML = `
+                    <div class="card-title">${spot.city_area}, ${spot.district}</div>
+                    <div class="card-time">Reported: **${relativeTime}**</div>
+                    <p class="card-description"><strong>Detailed Location:</strong> ${spot.description}</p>
+                    <p style="font-size:0.9em; color:#00796b;">(State: ${spot.state})</p>
+                    <button class="verify-btn" data-id="${spot.id}">❌ Parking Nahi Mili</button>
+                `;
+                resultsContainer.appendChild(card);
+            });
+            
+            addVerificationListeners();
+        }
+
+        // Final Verification Logic 
+        function addVerificationListeners() {
+            document.querySelectorAll('.verify-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!confirm("Kya aap confirm karte hain ki yeh parking spot ab khali nahi hai? Isse iske negative votes badh jaayenge.")) {
+                        return; 
+                    }
+                    
+                    const spotId = this.dataset.id;
+                    const buttonElement = this;
+                    buttonElement.disabled = true; 
+                    buttonElement.textContent = 'Reporting...'; 
+
+                    const formData = new FormData();
+                    formData.append('method', 'PUT'); 
+                    formData.append('id', spotId);    
+                    
+                    fetch(WEB_APP_URL, {
+                        method: 'POST', 
+                        body: formData 
+                    })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.result === 'success') {
+                            alert(`✅ Spot ID ${spotId} has been successfully reported as unavailable. Total Negative Votes: ${data.new_votes}`);
+                            buttonElement.textContent = 'Reported!';
+                            buttonElement.style.backgroundColor = '#9e9e9e';
+                        } else {
+                            alert('❌ Reporting failed: ' + (data.message || 'Unknown error.'));
+                        }
+                    })
+                    .catch(error => {
+                        alert('❌ Connection error while reporting. Kripya console check karein.');
+                        console.error('Fetch Error:', error);
+                    })
+                    .finally(() => { 
+                        if (buttonElement.textContent === 'Reporting...') {
+                            buttonElement.disabled = false;
+                            buttonElement.textContent = '❌ Parking Nahi Mili';
+                        }
+                    });
+                });
+            });
+        }
+        
+        // ----------------------------------------------------
+        // SCROLL TO TOP Button Logic
+        // ----------------------------------------------------
+        let mybutton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0; 
+        }
+    </script>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="name">PARKEASE</div>
+                <p class="tagline">Find Parking in Seconds.</p>
+                <p class="contact-links" style="margin-top: 15px;">
+                    <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank">📧 CLICK HERE</a> <span>(Contact)</span>
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Quick Links</div>
+                    <a href="about.html">About Me</a>
+                    <a href="search.html">Find Parking</a>
+                </div>
+
+                <div id="footer-support">
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Connect</div>
+                    <p style="margin-bottom: 5px;">📸 <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank" style="display: inline;">Instagram</a></p>
+                    <p style="margin-bottom: 5px;">🔗 <a href="https://t.me/ox1_Spark" target="_blank" style="display: inline;">Telegram</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 ParkEase — Find Parking in Seconds. Built with 💚 for a Smarter India.
+        </div>
+    </footer>
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">▲ Home</button>
+</body>
+</html>
