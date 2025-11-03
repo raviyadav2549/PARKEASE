@@ -1,0 +1,96 @@
+<style>
+/* Hamburger menu CSS */
+.menu-icon {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-icon div {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.sidebar {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 100; 
+    top: 0;
+    left: 0;
+    background-color: #111; 
+    overflow-x: hidden; 
+    transition: 0.5s; 
+    padding-top: 60px; 
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+}
+
+.sidebar a {
+    padding: 15px 15px 15px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+    background-color: #333;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Header style for placement */
+.app-header {
+    background-color: #000;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+</style>
+
+<div class="app-header">
+    <div class="menu-icon" onclick="openNav()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="app-title">PARKEASE</div>
+    <div style="width: 50px;"></div> 
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">➕ Add Parking</a>
+    <a href="search.html">🔍 Find Parking</a>
+    <a href="about.html">👤 About Me</a>
+    <a href="#footer-support">📞 Support / Contact</a> 
+    <a href="#">💡 How It Works</a>
+</div>
+
+<script>
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+}
+</script>
