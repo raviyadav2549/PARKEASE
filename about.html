@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Parkease</title>
+    <style>
+        /* NEW HEADER/NAVIGATION CSS (Consistent across all pages) */
+        .app-header { background-color: #000; color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; }
+        .app-title { font-size: 1.5em; font-weight: bold; color: white; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-size: 1.05em; padding: 8px 0; transition: color 0.3s; }
+        .nav-links a:hover { color: #00C853; } 
+
+        /* ABOUT PAGE CSS */
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f8f9fa; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { color: #1976D2; text-align: center; }
+        p { line-height: 1.6; }
+
+        /* FOOTER CSS (Common) */
+        footer { background-color: #222; color: #ccc; padding: 40px 20px 20px; margin-top: 50px; }
+        .footer-content { max-width: 900px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; }
+        .footer-brand { width: 100%; max-width: 300px; margin-bottom: 20px; }
+        .footer-brand .name { font-size: 24px; font-weight: bold; color: white; margin-bottom: 5px; }
+        .footer-brand p, .footer-links a { color: #ccc; font-size: 14px; }
+        .footer-links { display: flex; gap: 60px; }
+        .footer-links a { display: block; text-decoration: none; margin-bottom: 8px; color: #ccc; transition: color 0.3s; }
+        .footer-links a:hover { color: #00C853; }
+        .copyright { width: 100%; text-align: center; margin-top: 30px; font-size: 0.85em; }
+        .contact-links a { color: #1976D2; text-decoration: none; font-weight: bold; }
+
+        /* SCROLL TO TOP BUTTON CSS */
+        #scrollToTopBtn {
+            display: none; 
+            position: fixed; 
+            bottom: 25px; 
+            right: 25px; 
+            z-index: 100; 
+            border: none; 
+            outline: none; 
+            background-color: #1976D2; 
+            color: white; 
+            cursor: pointer; 
+            padding: 15px; 
+            border-radius: 50%; 
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        #scrollToTopBtn:hover {
+            background-color: #1565C0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <div class="app-title">PARKEASE</div>
+        <div class="nav-links">
+            <a href="index.html">ADD PARKING</a>
+            <a href="search.html">FIND PARKING</a>
+            <a href="about.html">ABOUT ME</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>About The Creator</h2>
+        <p>My name is **Ravi**.</p>
+        <p>This Parkease project was developed as a solution to address real-time street parking challenges in urban areas, leveraging Google Apps Script and Sheets for a reliable, serverless backend. (You can add more details here)</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="name">PARKEASE</div>
+                <p class="tagline">Find Parking in Seconds.</p>
+                <p class="contact-links" style="margin-top: 15px;">
+                    <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank">📧 CLICK HERE</a> <span>(Contact)</span>
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Quick Links</div>
+                    <a href="about.html">About Me</a>
+                    <a href="search.html">Find Parking</a>
+                </div>
+
+                <div id="footer-support">
+                    <div style="font-weight: bold; margin-bottom: 10px; color: white;">Connect</div>
+                    <p style="margin-bottom: 5px;">📸 <a href="https://www.instagram.com/ravi._.ydvv?igsh=MWlxNHh3nFtcm1zOA==" target="_blank" style="display: inline;">Instagram</a></p>
+                    <p style="margin-bottom: 5px;">🔗 <a href="https://t.me/ox1_Spark" target="_blank" style="display: inline;">Telegram</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 ParkEase — Find Parking in Seconds. Built with 💚 for a Smarter India.
+        </div>
+    </footer>
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">▲ Home</button>
+
+    <script>
+        // ----------------------------------------------------
+        // SCROLL TO TOP Button Logic
+        // ----------------------------------------------------
+        let mybutton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0; 
+        }
+    </script>
+</body>
+</html>
